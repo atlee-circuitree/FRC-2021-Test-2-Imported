@@ -19,8 +19,12 @@ import frc.robot.commands.driveForwardCommand;
 
 public class RobotContainer {
 
-  //217.2944297082
- 
+  // 217.2944297082 Old Wheel Dia x Pi
+  // 78.9168074582 New Wheel Dia x Pi
+  // 26.523624420166016 Very Rough 5 feet estamate 
+  // COUNTS_PER_INCH  = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * Math.PI);
+  // CPI = (42 * 10.75) / (78.9168074582)
+
   //constants
 
   public static Constants m_constants;
@@ -35,7 +39,7 @@ public class RobotContainer {
   {
 
     
-      double encoder = inches * 217.2944297082;
+      double encoder = inches * 451.5 / 217.2944297082;
 
       Command m_driveStraightUntilEncoderValueCommand = new driveForwardCommand(encoder, speed, m_drivetrainSubsystem);
 
@@ -75,7 +79,7 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
    
-    return GenerateEncoderDriveCommand(60, .2);
+    return GenerateEncoderDriveCommand(36, .1);
 
   }
 

@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.drivetrainSubsystem;
 
@@ -32,10 +33,23 @@ public class driveForwardCommand extends CommandBase {
   @Override
   public void execute() {
 
+    if (encoderReadingRight <= -encoderTarget) {
+
     encoderReadingLeft = m_subsystem.getLeftEncoder();
     encoderReadingRight = m_subsystem.getRightEncoder();
+
+    System.out.print("Encoder Reading");
+    System.out.print(encoderReadingRight);
      
     m_subsystem.driveStraight(targetSpeed);
+
+    } else {
+
+    m_subsystem.driveStop();
+
+    end(true);
+
+    }
 
   }
 
@@ -51,15 +65,7 @@ public class driveForwardCommand extends CommandBase {
   @Override
   public boolean isFinished() {
 
-    if (encoderReadingLeft >= -encoderTarget || encoderReadingRight >= -encoderTarget) {
-
-    return true;
-
-   } else {
-
     return false;
-
-   }
 
   }
 
