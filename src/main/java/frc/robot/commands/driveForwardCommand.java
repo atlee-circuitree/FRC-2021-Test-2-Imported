@@ -33,18 +33,20 @@ public class driveForwardCommand extends CommandBase {
   @Override
   public void execute() {
 
-    if (encoderReadingRight <= -encoderTarget) {
+    if (encoderReadingRight <= encoderTarget) {
 
     encoderReadingLeft = m_subsystem.getLeftEncoder();
     encoderReadingRight = m_subsystem.getRightEncoder();
 
-    System.out.print("Encoder Reading");
+    System.out.print(" Encoder Reading, Running : ");
     System.out.print(encoderReadingRight);
      
     m_subsystem.driveStraight(targetSpeed);
 
     } else {
 
+    System.out.print(" Encoder Reading, Complete : ");
+    System.out.print(encoderReadingRight);
     m_subsystem.driveStop();
 
     end(true);

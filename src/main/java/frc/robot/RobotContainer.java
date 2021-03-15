@@ -39,7 +39,7 @@ public class RobotContainer {
   {
 
     
-      double encoder = inches * 451.5 / 217.2944297082;
+      double encoder = (inches / 6) * 451.5 / 217.2944297082;
 
       Command m_driveStraightUntilEncoderValueCommand = new driveForwardCommand(encoder, speed, m_drivetrainSubsystem);
 
@@ -79,7 +79,7 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
    
-    return GenerateEncoderDriveCommand(36, .1);
+    return GenerateEncoderDriveCommand(60, .1);
 
   }
 

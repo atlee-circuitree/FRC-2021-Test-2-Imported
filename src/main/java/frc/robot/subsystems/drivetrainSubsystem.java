@@ -54,8 +54,8 @@ public class drivetrainSubsystem extends SubsystemBase {
   leftEncoder = leftFrontMotor.getEncoder();
   rightEncoder = rightFrontMotor.getEncoder();
 
-  leftFrontMotor.setInverted(true);
-  rightFrontMotor.setInverted(true);
+  leftFrontMotor.setInverted(false);
+  rightFrontMotor.setInverted(false);
 
   robotDrive = new DifferentialDrive(leftDrive, rightDrive);
 
@@ -71,8 +71,8 @@ public class drivetrainSubsystem extends SubsystemBase {
 
   public void driveStraight(double Power) {
 
-    leftDrive.set(Power);
-    rightDrive.set(-Power);
+    leftDrive.set(-Power);
+    rightDrive.set(Power);
 
   }
 
@@ -92,8 +92,8 @@ public class drivetrainSubsystem extends SubsystemBase {
 
   public void driveStop() {
 
-    leftDrive.set(0);
-    rightDrive.set(0);
+    leftDrive.stopMotor();
+    rightDrive.stopMotor();
 
   }
 
