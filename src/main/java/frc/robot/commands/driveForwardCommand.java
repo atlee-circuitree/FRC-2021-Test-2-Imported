@@ -51,7 +51,7 @@ public class driveForwardCommand extends CommandBase {
   @Override
   public boolean isFinished() {
 
-    if (encoderReadingLeft >= encoderTarget || encoderReadingRight >= encoderTarget) {
+    if (encoderReadingLeft >= -encoderTarget || encoderReadingRight >= -encoderTarget) {
 
     return true;
 
