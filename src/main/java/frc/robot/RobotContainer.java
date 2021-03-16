@@ -16,6 +16,7 @@ import frc.robot.subsystems.drivetrainSubsystem;
 import frc.robot.commands.driveCommand;
 import frc.robot.Constants;
 import frc.robot.commands.driveForwardCommand;
+import frc.robot.commands.turnToAngleCommand;
 
 public class RobotContainer {
 
@@ -38,8 +39,21 @@ public class RobotContainer {
   public Command GenerateEncoderDriveCommand(double inches, double speed)
   {
 
-    
-      double encoder = (inches / 6) * 451.5 / 217.2944297082;
+      double PPR;
+      double GearReduction;
+      double WheelDiameter;
+      double Pi;
+      double CPI;
+
+      PPR = 42;
+      GearReduction = 10.75;
+      WheelDiameter = 8;
+      Pi = 3.1415;
+      CPI = (PPR * GearReduction) / (WheelDiameter * Pi);
+      //451.5, 25.132
+
+
+      double encoder = (inches / 12) * CPI;
 
       Command m_driveStraightUntilEncoderValueCommand = new driveForwardCommand(encoder, speed, m_drivetrainSubsystem);
 
@@ -47,12 +61,23 @@ public class RobotContainer {
       
   }
 
+  public Command GenerateTurnCommand(double angle) {
+
+      Command m_turnToAngleCommand = new turnToAngleCommand(angle, m_drivetrainSubsystem);
+
+      return m_turnToAngleCommand;
+
+  }
+
   public void driveSetup() {
 
-    SpeedControllerGroup leftDrive = new SpeedControllerGroup(m_drivetrainSubsystem.leftFrontMotor, m_drivetrainSubsystem.leftBackMotor);
-    SpeedControllerGroup rightDrive = new SpeedControllerGroup(m_drivetrainSubsystem.rightFrontMotor, m_drivetrainSubsystem.rightBackMotor); 
+    CANSparkMax leftFrontMotor = new CANSparkMax(Constants.driveFrontLeftMotor, MotorType.kBrushless);
+    CANSparkMax leftBackMotor = new CANSparkMax(Constants.driveBackLeftMotor, MotorType.kBrushless);
 
-    m_drivetrainSubsystem.driveSetup(leftDrive, rightDrive);
+    CANSparkMax rightFrontMotor = new CANSparkMax(Constants.driveFrontRightMotor, MotorType.kBrushless);
+    CANSparkMax rightBackMotor = new CANSparkMax(Constants.driveBackRightMotor, MotorType.kBrushless);
+
+    m_drivetrainSubsystem.driveSetup(leftFrontMotor, leftBackMotor, rightFrontMotor, rightBackMotor);
 
   }
 
@@ -79,8 +104,8 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
    
-    return GenerateEncoderDriveCommand(60, .1);
-
+    //return GenerateEncoderDriveCommand(36, .1);
+    return GenerateTurnCommand(90);  
   }
 
 }

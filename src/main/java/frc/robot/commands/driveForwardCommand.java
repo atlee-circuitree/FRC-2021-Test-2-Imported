@@ -38,14 +38,16 @@ public class driveForwardCommand extends CommandBase {
     encoderReadingLeft = m_subsystem.getLeftEncoder();
     encoderReadingRight = m_subsystem.getRightEncoder();
 
-    System.out.printf(" Encoder Reading, Running : ", encoderReadingRight);
+    System.out.printf(" Encoder Reading, Running : ");
+    System.out.print(encoderReadingRight);
      
     m_subsystem.driveStraight(targetSpeed);
 
     } else {
 
-    System.out.printf(" Encoder Reading, Complete : ", encoderReadingRight);
-    
+    System.out.print(" Encoder Reading, Complete : ");
+    System.out.print(encoderReadingRight);
+     
     m_subsystem.driveStop();
 
     end(true);

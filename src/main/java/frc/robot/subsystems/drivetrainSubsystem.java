@@ -11,6 +11,7 @@
 
 package frc.robot.subsystems;
 
+import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
@@ -20,10 +21,15 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpiutil.math.MathUtil;
 
 public class drivetrainSubsystem extends SubsystemBase {
    
   DifferentialDrive robotDrive;
+
+  AHRS ahrs;
+
+  double currentRotationRate;
  
   public CANSparkMax leftFrontMotor = new CANSparkMax(1, MotorType.kBrushless);
   public CANSparkMax rightFrontMotor = new CANSparkMax(2, MotorType.kBrushless);
@@ -45,15 +51,28 @@ public class drivetrainSubsystem extends SubsystemBase {
 
   static final double kToleranceDegrees = 2.0f;
 
-  final static int frontLeftChannel = 2;
-  final static int rearLeftChannel = 3;
-  final static int frontRightChannel = 1;
-  final static int rearRightChannel = 0;
+  public void driveSetup(CANSparkMax driveFrontLeftMotor, CANSparkMax driveBackLeftMotor, CANSparkMax driveFrontRightMotor, CANSparkMax driveBackRightMotor){
 
-  public void driveSetup(SpeedControllerGroup leftDrive, SpeedControllerGroup rightDrive){
+  //ahrs = new AHRS(I2C.Port.kMXP);
+
+  turnController = new PIDController(kP, kI, kD);
+  turnController.enableContinuousInput(-180.0f, 180.0f);
 
   leftEncoder = leftFrontMotor.getEncoder();
   rightEncoder = rightFrontMotor.getEncoder();
+
+  leftFrontMotor.setInverted(false);
+  leftBackMotor.setInverted(true);
+  rightFrontMotor.setInverted(false);
+  rightBackMotor.setInverted(true);
+
+  leftFrontMotor.setIdleMode(IdleMode.kCoast);
+  leftBackMotor.setIdleMode(IdleMode.kCoast);
+  rightFrontMotor.setIdleMode(IdleMode.kCoast);
+  rightBackMotor.setIdleMode(IdleMode.kCoast);
+
+  leftDrive = new SpeedControllerGroup(driveFrontLeftMotor, driveBackLeftMotor);
+  rightDrive = new SpeedControllerGroup(driveFrontRightMotor, driveBackRightMotor);
 
   robotDrive = new DifferentialDrive(leftDrive, rightDrive);
 
@@ -61,9 +80,9 @@ public class drivetrainSubsystem extends SubsystemBase {
 
   }
 
-  public void driveRobot(Double X, double Y) {
+  public void driveRobot(double X, double Y) {
 
-    robotDrive.arcadeDrive(-Y, X, true);
+    robotDrive.arcadeDrive(Y, X, true);
   
   }
 
@@ -71,6 +90,31 @@ public class drivetrainSubsystem extends SubsystemBase {
 
     leftDrive.set(-Power);
     rightDrive.set(Power);
+
+  }
+
+  public void setAngle(float angle) {
+
+     turnController.setSetpoint(angle);
+
+  }
+
+  public double getAngle() {
+
+    return ahrs.getAngle();
+
+  }
+
+  public void turnRobot() {
+
+     currentRotationRate = MathUtil.clamp(turnController.calculate(ahrs.getAngle()), -1.0, 1.0);
+
+  }
+
+  public void turnLeft() {
+
+    leftDrive.set(.2);
+    rightDrive.set(.2);
 
   }
 
