@@ -13,11 +13,13 @@ public final class Constants {
 
   // Map all the motors / pnumatics here
 
-  //Drivetrain
+  // Drivetrain
 
-  public static int driveFrontLeftMotor = 1;
-  public static int driveFrontRightMotor = 2;
-  public static int driveBackLeftMotor = 3;
+  // 3/19/21 Changed the can ID number in order to make them more correct
+
+  public static int driveFrontLeftMotor = 3;
+  public static int driveFrontRightMotor = 1; //1
+  public static int driveBackLeftMotor = 2;
   public static int driveBackRightMotor = 4;
 
   static XboxController Xbox1 = new XboxController(0);

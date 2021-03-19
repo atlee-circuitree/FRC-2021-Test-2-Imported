@@ -61,9 +61,9 @@ public class drivetrainSubsystem extends SubsystemBase {
   leftEncoder = leftFrontMotor.getEncoder();
   rightEncoder = rightFrontMotor.getEncoder();
 
-  leftFrontMotor.setInverted(false);
+  leftFrontMotor.setInverted(true);
   leftBackMotor.setInverted(true);
-  rightFrontMotor.setInverted(false);
+  rightFrontMotor.setInverted(true);
   rightBackMotor.setInverted(true);
 
   leftFrontMotor.setIdleMode(IdleMode.kCoast);
@@ -74,11 +74,13 @@ public class drivetrainSubsystem extends SubsystemBase {
   leftDrive = new SpeedControllerGroup(driveFrontLeftMotor, driveBackLeftMotor);
   rightDrive = new SpeedControllerGroup(driveFrontRightMotor, driveBackRightMotor);
 
-  robotDrive = new DifferentialDrive(leftFrontMotor, rightFrontMotor);
+  robotDrive = new DifferentialDrive(leftDrive, rightDrive);
 
   resetEncoders();
 
   }
+
+
 
   public void driveRobot(double X, double Y) {
 
