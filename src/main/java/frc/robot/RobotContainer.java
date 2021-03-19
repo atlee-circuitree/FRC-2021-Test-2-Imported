@@ -53,7 +53,10 @@ public class RobotContainer {
       //451.5, 25.132
 
 
-      double encoder = (inches / 12) * CPI;
+      double encoder = (inches / 42) * CPI;
+
+      System.out.print("Encoder Target, ");
+      System.out.print(encoder);
 
       Command m_driveStraightUntilEncoderValueCommand = new driveForwardCommand(encoder, speed, m_drivetrainSubsystem);
 
@@ -95,6 +98,8 @@ public class RobotContainer {
 
     m_drivetrainSubsystem.setDefaultCommand(m_driveCommand);
 
+    
+
   }
 
   private void configureButtonBindings() {
@@ -104,8 +109,8 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
    
-    //return GenerateEncoderDriveCommand(36, .1);
-    return GenerateTurnCommand(90);  
+    return GenerateEncoderDriveCommand(36, .1);
+    //return GenerateTurnCommand(90);  
   }
 
 }
