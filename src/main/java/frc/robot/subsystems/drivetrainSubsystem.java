@@ -74,7 +74,7 @@ public class drivetrainSubsystem extends SubsystemBase {
   leftDrive = new SpeedControllerGroup(driveFrontLeftMotor, driveBackLeftMotor);
   rightDrive = new SpeedControllerGroup(driveFrontRightMotor, driveBackRightMotor);
 
-  robotDrive = new DifferentialDrive(leftDrive, rightDrive);
+  robotDrive = new DifferentialDrive(leftFrontMotor, rightFrontMotor);
 
   resetEncoders();
 
