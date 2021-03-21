@@ -66,11 +66,6 @@ public class drivetrainSubsystem extends SubsystemBase {
   rightFrontMotor.setInverted(true);
   rightBackMotor.setInverted(true);
 
-  leftFrontMotor.setIdleMode(IdleMode.kCoast);
-  leftBackMotor.setIdleMode(IdleMode.kCoast);
-  rightFrontMotor.setIdleMode(IdleMode.kCoast);
-  rightBackMotor.setIdleMode(IdleMode.kCoast);
-
   leftDrive = new SpeedControllerGroup(driveFrontLeftMotor, driveBackLeftMotor);
   rightDrive = new SpeedControllerGroup(driveFrontRightMotor, driveBackRightMotor);
 
@@ -80,7 +75,23 @@ public class drivetrainSubsystem extends SubsystemBase {
 
   }
 
+  public void setBrake() {
 
+    leftFrontMotor.setIdleMode(IdleMode.kBrake);
+    leftBackMotor.setIdleMode(IdleMode.kBrake);
+    rightFrontMotor.setIdleMode(IdleMode.kBrake);
+    rightBackMotor.setIdleMode(IdleMode.kBrake);
+
+  }
+
+  public void setCoast() {
+
+    leftFrontMotor.setIdleMode(IdleMode.kCoast);
+    leftBackMotor.setIdleMode(IdleMode.kCoast);
+    rightFrontMotor.setIdleMode(IdleMode.kCoast);
+    rightBackMotor.setIdleMode(IdleMode.kCoast);
+
+  }
 
   public void driveRobot(double X, double Y) {
 

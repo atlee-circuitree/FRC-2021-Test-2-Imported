@@ -25,6 +25,7 @@ public class RobotContainer {
   // 26.523624420166016 Very Rough 5 feet estamate 
   // COUNTS_PER_INCH  = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * Math.PI);
   // CPI = (42 * 10.75) / (78.9168074582)
+  // 17.9 = Counts per foot
 
   //constants
 
@@ -56,7 +57,7 @@ public class RobotContainer {
       double encoder = (inches / 42) * CPI;
 
       System.out.print("Encoder Target, ");
-      System.out.print(encoder);
+      System.out.print(encoder); 
 
       Command m_driveStraightUntilEncoderValueCommand = new driveForwardCommand(encoder, speed, m_drivetrainSubsystem);
 
@@ -109,7 +110,7 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
    
-    return GenerateEncoderDriveCommand(36, .1);
+    return GenerateEncoderDriveCommand(120, .1);
     //return GenerateTurnCommand(90);  
   }
 

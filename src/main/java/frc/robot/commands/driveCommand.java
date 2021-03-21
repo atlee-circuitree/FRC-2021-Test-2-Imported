@@ -7,6 +7,8 @@
 
 package frc.robot.commands;
 
+import com.revrobotics.CANSparkMax.IdleMode;
+
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -35,6 +37,11 @@ public class driveCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+
+    m_subsystem.leftFrontMotor.setIdleMode(IdleMode.kCoast);
+    m_subsystem.leftBackMotor.setIdleMode(IdleMode.kCoast);
+    m_subsystem.rightFrontMotor.setIdleMode(IdleMode.kCoast);
+    m_subsystem.rightBackMotor.setIdleMode(IdleMode.kCoast);
 
     m_subsystem.driveRobot(xbcDriveController.getX(Hand.kRight), xbcDriveController.getY(Hand.kLeft));
 

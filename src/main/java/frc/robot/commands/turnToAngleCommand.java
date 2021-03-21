@@ -28,6 +28,8 @@ public class turnToAngleCommand extends CommandBase {
 
     m_subsystem.setAngle(90);
 
+    m_subsystem.setBrake();
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
