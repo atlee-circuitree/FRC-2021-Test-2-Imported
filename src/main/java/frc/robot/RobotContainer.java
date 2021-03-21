@@ -12,11 +12,14 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.drivetrainSubsystem;
 import frc.robot.commands.driveCommand;
 import frc.robot.Constants;
 import frc.robot.commands.driveForwardCommand;
 import frc.robot.commands.turnToAngleCommand;
+import frc.robot.commands.waitCommand;
 
 public class RobotContainer {
 
@@ -73,6 +76,16 @@ public class RobotContainer {
 
   }
 
+  public Command GenerateWaitCommand(double seconds) {
+
+      Command WaitCommand = new waitCommand(seconds);
+
+      return WaitCommand;
+
+  }
+
+  SequentialCommandGroup AutoTest = new SequentialCommandGroup(GenerateEncoderDriveCommand(120, .1), GenerateWaitCommand(3), GenerateEncoderDriveCommand(60, .1));
+
   public void driveSetup() {
 
     CANSparkMax leftFrontMotor = new CANSparkMax(Constants.driveFrontLeftMotor, MotorType.kBrushless);
@@ -110,8 +123,10 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
    
-    return GenerateEncoderDriveCommand(120, .1);
-    //return GenerateTurnCommand(90);  
+    //return GenerateEncoderDriveCommand(120, .1);
+
+    return AutoTest;
+       
   }
 
 }

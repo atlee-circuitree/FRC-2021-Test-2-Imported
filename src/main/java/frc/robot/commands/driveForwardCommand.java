@@ -27,6 +27,8 @@ public class driveForwardCommand extends CommandBase {
 
     m_subsystem.resetEncoders();
 
+    m_subsystem.setBrake();
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -68,7 +70,15 @@ public class driveForwardCommand extends CommandBase {
   @Override
   public boolean isFinished() {
 
-    return false;
+    if (-encoderReadingRight <= Math.abs(encoderTarget)) {
+
+      return false;
+
+    } else {
+
+      return true;
+
+    }
 
   }
 

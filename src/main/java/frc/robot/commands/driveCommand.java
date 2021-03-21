@@ -31,17 +31,14 @@ public class driveCommand extends CommandBase {
   @Override
   public void initialize() {
 
+    m_subsystem.setCoast();
+
 
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
-    m_subsystem.leftFrontMotor.setIdleMode(IdleMode.kCoast);
-    m_subsystem.leftBackMotor.setIdleMode(IdleMode.kCoast);
-    m_subsystem.rightFrontMotor.setIdleMode(IdleMode.kCoast);
-    m_subsystem.rightBackMotor.setIdleMode(IdleMode.kCoast);
 
     m_subsystem.driveRobot(xbcDriveController.getX(Hand.kRight), xbcDriveController.getY(Hand.kLeft));
 
