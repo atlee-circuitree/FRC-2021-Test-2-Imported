@@ -10,8 +10,10 @@ import frc.robot.subsystems.drivetrainSubsystem;
 public class turnToAngleCommand extends CommandBase {
 
   float targetAngle;
+  float Yaw;
   double inputangle;
   boolean rotateToAngle = false;
+  double currentRotationRate;
   drivetrainSubsystem m_subsystem;
  
   public turnToAngleCommand(double inputAngle, drivetrainSubsystem driveSubsystem) {
@@ -35,21 +37,20 @@ public class turnToAngleCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+/*
+   if (m_subsystem.getNavxYaw(Yaw) <= targetAngle) {
 
-   if (m_subsystem.getAngle() <= targetAngle) {
+      System.out.printf(" Navx Reading, Running : ");
+      System.out.print(m_subsystem.getNavxYaw(Yaw));
 
-    m_subsystem.turnLeft();
-    System.out.printf(" Navx Reading, Running : ");
-    System.out.print(m_subsystem.getAngle());
+    } else {
 
-   } else {
+      end(true);
+      System.out.printf(" Navx Reading, Complete : ");
+      System.out.print(m_subsystem.getNavxYaw(Yaw));
 
-    end(true);
-    System.out.printf(" Navx Reading, Complete : ");
-    System.out.print(m_subsystem.getAngle());
-
-   }
-
+    }
+*/
   }
 
   // Called once the command ends or is interrupted.

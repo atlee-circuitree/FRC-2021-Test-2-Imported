@@ -12,12 +12,15 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.drivetrainSubsystem;
+import frc.robot.commands.driveBackwardsCommand;
 import frc.robot.commands.driveCommand;
 import frc.robot.Constants;
 import frc.robot.commands.driveForwardCommand;
+import frc.robot.commands.setFeederCommand;
 import frc.robot.commands.turnToAngleCommand;
 import frc.robot.commands.waitCommand;
 
@@ -25,66 +28,101 @@ public class RobotContainer {
 
   // 217.2944297082 Old Wheel Dia x Pi
   // 78.9168074582 New Wheel Dia x Pi
-  // 26.523624420166016 Very Rough 5 feet estamate 
-  // COUNTS_PER_INCH  = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * Math.PI);
+  // 26.523624420166016 Very Rough 5 feet estamate
+  // COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
+  // (WHEEL_DIAMETER_INCHES * Math.PI);
   // CPI = (42 * 10.75) / (78.9168074582)
   // 17.9 = Counts per foot
 
-  //constants
+  // constants
 
   public static Constants m_constants;
 
-  //subsystems
-   
+  // subsystems
+
   private final drivetrainSubsystem m_drivetrainSubsystem = new drivetrainSubsystem();
 
-  //commands
+  // commands
 
-  public Command GenerateEncoderDriveCommand(double inches, double speed)
-  {
+  public Command GenerateEncoderDriveCommand(double inches, double speed) {
 
-      double PPR;
-      double GearReduction;
-      double WheelDiameter;
-      double Pi;
-      double CPI;
+    double PPR;
+    double GearReduction;
+    double WheelDiameter;
+    double Pi;
+    double CPI;
 
-      PPR = 42;
-      GearReduction = 10.75;
-      WheelDiameter = 8;
-      Pi = 3.1415;
-      CPI = (PPR * GearReduction) / (WheelDiameter * Pi);
-      //451.5, 25.132
+    PPR = 42;
+    GearReduction = 10.75;
+    WheelDiameter = 8;
+    Pi = 3.1415;
+    CPI = (PPR * GearReduction) / (WheelDiameter * Pi);
+    // 451.5, 25.132
 
+    double encoder = (inches / 42) * CPI;
 
-      double encoder = (inches / 42) * CPI;
+    System.out.print("Encoder Target, ");
+    System.out.print(encoder);
 
-      System.out.print("Encoder Target, ");
-      System.out.print(encoder); 
+    Command m_driveStraightUntilEncoderValueCommand = new driveForwardCommand(encoder, speed, m_drivetrainSubsystem);
 
-      Command m_driveStraightUntilEncoderValueCommand = new driveForwardCommand(encoder, speed, m_drivetrainSubsystem);
+    return m_driveStraightUntilEncoderValueCommand;
 
-      return m_driveStraightUntilEncoderValueCommand;
-      
+  }
+
+  public Command GenerateEncoderDriveBackwardsCommand(double inches, double speed) {
+
+    double PPR;
+    double GearReduction;
+    double WheelDiameter;
+    double Pi;
+    double CPI;
+
+    PPR = 42;
+    GearReduction = 10.75;
+    WheelDiameter = 8;
+    Pi = 3.1415;
+    CPI = (PPR * GearReduction) / (WheelDiameter * Pi);
+    // 451.5, 25.132
+
+    double encoder = (inches / 42) * CPI;
+
+    System.out.print("Encoder Target, ");
+    System.out.print(encoder);
+
+    Command m_driveBackwardsUntilEncoderValueCommand = new driveBackwardsCommand(encoder, speed, m_drivetrainSubsystem);
+
+    return m_driveBackwardsUntilEncoderValueCommand;
+
   }
 
   public Command GenerateTurnCommand(double angle) {
 
-      Command m_turnToAngleCommand = new turnToAngleCommand(angle, m_drivetrainSubsystem);
+    Command m_turnToAngleCommand = new turnToAngleCommand(angle, m_drivetrainSubsystem);
 
-      return m_turnToAngleCommand;
+    return m_turnToAngleCommand;
 
   }
 
   public Command GenerateWaitCommand(double seconds) {
 
-      Command WaitCommand = new waitCommand(seconds);
+    Command WaitCommand = new waitCommand(seconds);
 
-      return WaitCommand;
+    return WaitCommand;
+
+  }
+
+  public Command GenerateFeederCommand(double speed) {
+
+    Command SetFeederCommand = new setFeederCommand(speed, m_drivetrainSubsystem);
+
+    return SetFeederCommand;
 
   }
 
   SequentialCommandGroup AutoTest = new SequentialCommandGroup(GenerateEncoderDriveCommand(120, .1), GenerateWaitCommand(3), GenerateEncoderDriveCommand(60, .1));
+
+  SequentialCommandGroup AutoFeedTest = new SequentialCommandGroup(GenerateFeederCommand(.8).withTimeout(8), GenerateEncoderDriveBackwardsCommand(96, .2));
 
   public void driveSetup() {
 
@@ -123,9 +161,7 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
    
-    //return GenerateEncoderDriveCommand(120, .1);
-
-    return AutoTest;
+    return AutoFeedTest;
        
   }
 

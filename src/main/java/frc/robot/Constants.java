@@ -21,6 +21,9 @@ public final class Constants {
   public static int driveFrontRightMotor = 1; //1
   public static int driveBackLeftMotor = 2;
   public static int driveBackRightMotor = 4;
+  public static int feederMotor = 5; //5
+  public static int beltLeftMotor = 8;
+  public static int beltRightMotor = 6;
 
   static XboxController Xbox1 = new XboxController(0);
    
