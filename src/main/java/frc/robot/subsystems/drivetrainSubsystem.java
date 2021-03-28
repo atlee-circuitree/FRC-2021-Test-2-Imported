@@ -35,10 +35,13 @@ public class drivetrainSubsystem extends SubsystemBase {
   public CANSparkMax rightFrontMotor = new CANSparkMax(2, MotorType.kBrushless);
   public CANSparkMax leftBackMotor = new CANSparkMax(3, MotorType.kBrushless);
   public CANSparkMax rightBackMotor = new CANSparkMax(4, MotorType.kBrushless);
+<<<<<<< HEAD
   public CANSparkMax feederMotor = new CANSparkMax(5, MotorType.kBrushless);
   public CANSparkMax beltLeftMotor = new CANSparkMax(8, MotorType.kBrushless);
   public CANSparkMax beltRightMotor = new CANSparkMax(6, MotorType.kBrushless);
   public CANSparkMax elevatorMotor = new CANSparkMax(9, MotorType.kBrushed);
+=======
+>>>>>>> parent of e8ffaee (Added a (bad) setFeeder command and a drivebackwards command)
 
   SpeedControllerGroup leftDrive = new SpeedControllerGroup(leftFrontMotor, leftBackMotor);
   SpeedControllerGroup rightDrive = new SpeedControllerGroup(rightFrontMotor, rightBackMotor);
@@ -69,8 +72,6 @@ public class drivetrainSubsystem extends SubsystemBase {
   leftBackMotor.setInverted(true);
   rightFrontMotor.setInverted(true);
   rightBackMotor.setInverted(true);
-  beltLeftMotor.setInverted(true);
-  beltRightMotor.setInverted(false);
 
   leftDrive = new SpeedControllerGroup(driveFrontLeftMotor, driveBackLeftMotor);
   rightDrive = new SpeedControllerGroup(driveFrontRightMotor, driveBackRightMotor);
@@ -101,7 +102,11 @@ public class drivetrainSubsystem extends SubsystemBase {
 
   public void driveRobot(double X, double Y) {
 
+<<<<<<< HEAD
     robotDrive.arcadeDrive(Y, -X/1.10, false);
+=======
+    robotDrive.arcadeDrive(Y, X, true);
+>>>>>>> parent of e8ffaee (Added a (bad) setFeeder command and a drivebackwards command)
   
   }
 
@@ -112,48 +117,19 @@ public class drivetrainSubsystem extends SubsystemBase {
 
   }
 
-  public void driveBackwards(double Power) {
-
-    leftDrive.set(Power);
-    rightDrive.set(-Power);
-
-  }
-
   public void setAngle(float angle) {
 
      turnController.setSetpoint(angle);
 
   }
 
-  public void turnRobot() {
-
-     currentRotationRate = MathUtil.clamp(turnController.calculate(ahrs.getAngle()), -1.0, 1.0);
-
-  }
-
-  public float getNavxYaw(float Yaw) {
-
-    return ahrs.getYaw();
-
-  }
-
-  public double getNavxRoll(float Roll) {
-
-    return ahrs.getRoll();
-
-  }
-
-  public double getNavxPitch(float Pitch) {
-
-    return ahrs.getPitch();
-
-  }
-  public double getNavxAngle(double Angle){
+  public double getAngle() {
 
     return ahrs.getAngle();
 
   }
 
+<<<<<<< HEAD
   public double getPIDOutput(double Angle) {
 
     return turnController.calculate(ahrs.getAngle());
@@ -180,8 +156,11 @@ public class drivetrainSubsystem extends SubsystemBase {
   }
 
   public void stopFeeder() {
+=======
+  public void turnRobot() {
+>>>>>>> parent of e8ffaee (Added a (bad) setFeeder command and a drivebackwards command)
 
-    feederMotor.set(0);
+     currentRotationRate = MathUtil.clamp(turnController.calculate(ahrs.getAngle()), -1.0, 1.0);
 
   }
 

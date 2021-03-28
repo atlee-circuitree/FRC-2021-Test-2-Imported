@@ -21,10 +21,13 @@ public final class Constants {
   public static int driveFrontRightMotor = 1; //1
   public static int driveBackLeftMotor = 2;
   public static int driveBackRightMotor = 4;
+<<<<<<< HEAD
   public static int feederMotor = 5; //5
   public static int beltLeftMotor = 8;
   public static int beltRightMotor = 6;
   public static int elevatorMotor = 9;
+=======
+>>>>>>> parent of e8ffaee (Added a (bad) setFeeder command and a drivebackwards command)
 
   static XboxController Xbox1 = new XboxController(0);
    
