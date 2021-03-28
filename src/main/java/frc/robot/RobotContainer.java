@@ -10,15 +10,17 @@ package frc.robot;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
+//import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+//import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
+//import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.drivetrainSubsystem;
 import frc.robot.commands.driveBackwardsCommand;
 import frc.robot.commands.driveCommand;
-import frc.robot.Constants;
+//import frc.robot.Constants;
 import frc.robot.commands.driveForwardCommand;
 import frc.robot.commands.setFeederCommand;
 import frc.robot.commands.turnToAngleCommand;
@@ -96,6 +98,9 @@ public class RobotContainer {
 
   }
 
+  JoystickButton DriverA = new JoystickButton(Constants.Xbox1, XboxController.Button.kA.value);
+  JoystickButton DriverB = new JoystickButton(Constants.Xbox1, XboxController.Button.kB.value);
+
   public Command GenerateTurnCommand(double angle) {
 
     Command m_turnToAngleCommand = new turnToAngleCommand(angle, m_drivetrainSubsystem);
@@ -156,12 +161,13 @@ public class RobotContainer {
 
   private void configureButtonBindings() {
 
-
+    DriverA.whileHeld(GenerateFeederCommand(.5));
+    DriverB.whileHeld(GenerateFeederCommand(0));
   }
 
   public Command getAutonomousCommand() {
    
-    return AutoFeedTest;
+    return AutoTest;
        
   }
 

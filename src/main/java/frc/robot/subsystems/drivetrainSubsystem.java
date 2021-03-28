@@ -38,6 +38,7 @@ public class drivetrainSubsystem extends SubsystemBase {
   public CANSparkMax feederMotor = new CANSparkMax(5, MotorType.kBrushless);
   public CANSparkMax beltLeftMotor = new CANSparkMax(8, MotorType.kBrushless);
   public CANSparkMax beltRightMotor = new CANSparkMax(6, MotorType.kBrushless);
+  public CANSparkMax elevatorMotor = new CANSparkMax(9, MotorType.kBrushed);
 
   SpeedControllerGroup leftDrive = new SpeedControllerGroup(leftFrontMotor, leftBackMotor);
   SpeedControllerGroup rightDrive = new SpeedControllerGroup(rightFrontMotor, rightBackMotor);
@@ -100,7 +101,7 @@ public class drivetrainSubsystem extends SubsystemBase {
 
   public void driveRobot(double X, double Y) {
 
-    robotDrive.arcadeDrive(Y, -X, true);
+    robotDrive.arcadeDrive(Y, -X/1.10, false);
   
   }
 
@@ -173,14 +174,25 @@ public class drivetrainSubsystem extends SubsystemBase {
   public void setFeeder(double Power) {
 
     feederMotor.set(Power);
-    beltLeftMotor.set(Power - .3);
-    beltRightMotor.set(Power - .3);
+    beltLeftMotor.set(Power);
+    beltRightMotor.set(Power);
 
   }
 
   public void stopFeeder() {
 
     feederMotor.set(0);
+
+  }
+
+  public void moveElevatorUp() {
+
+
+  }
+
+  public void moveElevatorDown() {
+
+
 
   }
 

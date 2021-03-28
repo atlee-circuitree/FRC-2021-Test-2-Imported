@@ -1,4 +1,3 @@
-/*----------------------------------------------------------------------------*/
 /* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
 /* must be accompanied by the FIRST BSD license file in the root directory of */
@@ -7,40 +6,36 @@
 
 package frc.robot.commands;
 
-//import com.revrobotics.CANSparkMax.IdleMode;
-
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
+//import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.drivetrainSubsystem;
 
 
-public class driveCommand extends CommandBase {
-    XboxController xbcDriveController;
-    drivetrainSubsystem m_subsystem;
+public class elevatorMove extends CommandBase {
 
-    public driveCommand(XboxController driveController, drivetrainSubsystem driveSubsystem) {
+  XboxController Xbox1;
+
+  drivetrainSubsystem m_subsystem;
+
+  public elevatorMove(XboxController ElevatorController, drivetrainSubsystem motorSubsystem) {
+     
     super();
-    xbcDriveController = driveController;
-    m_subsystem = driveSubsystem; 
+    Xbox1 = ElevatorController;
+    m_subsystem = motorSubsystem;
     addRequirements(m_subsystem);
-
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-
-    m_subsystem.setCoast();
-
-
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
 
-    m_subsystem.driveRobot(xbcDriveController.getX(Hand.kRight)/1.25, xbcDriveController.getY(Hand.kLeft));
+    //m_subsystem.runElevator(xbcElevatorController.getY(Hand.kLeft));
 
   }
 
@@ -48,6 +43,7 @@ public class driveCommand extends CommandBase {
   @Override
   public void end(boolean interrupted) {
 
+    //m_subsystem.stopElevator();
 
   }
 
